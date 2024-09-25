@@ -1,0 +1,1 @@
+# Assignment 12 of JavaScript. Chaptet (49-52).

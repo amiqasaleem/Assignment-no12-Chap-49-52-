@@ -1,0 +1,138 @@
+<!--Task 03: In previous assignment you have created a tabular data using javascript. Let’s modify that. Create a 
+form which takes student’s details and show each student detail in table. Each row of table must contain a delete
+button and an edit button. On click on delete button entire row should be deleted. On click on edit button, a 
+hidden form will appear with the values of that row. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task 03</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Student Details</h1>
+    <form id="studentForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" required>
+        <label for="age">Age:</label>
+        <input type="number" id="age" required>
+        <label for="grade">Grade:</label>
+        <input type="text" id="grade" required>
+        <button type="submit">Add Student</button>
+    </form>
+
+    <table id="studentTable">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Grade</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <div id="editForm" class="hidden">
+        <h2>Edit Student</h2>
+        <input type="hidden" id="editIndex">
+        <label for="editName">Name:</label>
+        <input type="text" id="editName" required>
+        <label for="editAge">Age:</label>
+        <input type="number" id="editAge" required>
+        <label for="editGrade">Grade:</label>
+        <input type="text" id="editGrade" required>
+        <button id="saveEditBtn">Save Changes</button>
+    </div>
+
+    <script>
+        const studentForm = document.getElementById('studentForm');
+        const studentTable = document.getElementById('studentTable').getElementsByTagName('tbody')[0];
+        const editForm = document.getElementById('editForm');
+        const editIndexInput = document.getElementById('editIndex');
+        const editNameInput = document.getElementById('editName');
+        const editAgeInput = document.getElementById('editAge');
+        const editGradeInput = document.getElementById('editGrade');
+        let students = [];
+
+        studentForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const name = document.getElementById('name').value;
+            const age = document.getElementById('age').value;
+            const grade = document.getElementById('grade').value;
+
+            const student = { name, age, grade };
+            students.push(student);
+            updateTable();
+            studentForm.reset();
+        });
+
+        function updateTable() {
+            studentTable.innerHTML = '';
+            students.forEach((student, index) => {
+                const row = studentTable.insertRow();
+                row.insertCell(0).textContent = student.name;
+                row.insertCell(1).textContent = student.age;
+                row.insertCell(2).textContent = student.grade;
+                
+                const actionsCell = row.insertCell(3);
+                const editBtn = document.createElement('button');
+                editBtn.textContent = 'Edit';
+                editBtn.onclick = () => editStudent(index);
+                actionsCell.appendChild(editBtn);
+                
+                const deleteBtn = document.createElement('button');
+                deleteBtn.textContent = 'Delete';
+                deleteBtn.onclick = () => deleteStudent(index);
+                actionsCell.appendChild(deleteBtn);
+            });
+        }
+
+        function deleteStudent(index) {
+            students.splice(index, 1);
+            updateTable();
+        }
+
+        function editStudent(index) {
+            const student = students[index];
+            editIndexInput.value = index;
+            editNameInput.value = student.name;
+            editAgeInput.value = student.age;
+            editGradeInput.value = student.grade;
+            editForm.classList.remove('hidden');
+        }
+
+        document.getElementById('saveEditBtn').addEventListener('click', function() {
+            const index = editIndexInput.value;
+            students[index] = {
+                name: editNameInput.value,
+                age: editAgeInput.value,
+                grade: editGradeInput.value
+            };
+            editForm.classList.add('hidden');
+            updateTable();
+        });
+    </script>
+</body>
+</html>

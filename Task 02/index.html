@@ -1,0 +1,53 @@
+<!--Task 02: Suppose in your webpage there is content area in which you have entered your item details, but user can only see some details on first look. When user clicks on “Read more” button, full detail of that particular item will be
+displayed. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task 02</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .content {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+        .full-details {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Item Details</h1>
+    <div class="content">
+        <h2>Item Title</h2>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus magnam nihil ad quos doloribus tempora qui. Odio, nostrum voluptatibus. Et.</p>
+        <div class="full-details">
+            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Molestias, beatae, quia est iste harum possimus autem deserunt eos laudantium iusto nam voluptatem reprehenderit optio odit asperiores, animi doloremque et cumque sint a sit inventore alias dolores voluptates. Doloribus molestias, nihil deserunt quisquam minus error temporibus rerum sit nobis magni excepturi tempora, nemo pariatur? Odit quo laboriosam libero provident deserunt laudantium, maiores nesciunt assumenda nisi corrupti culpa excepturi illum suscipit perferendis. Maiores fugit voluptatum obcaecati, amet nobis beatae perferendis earum et rerum incidunt aspernatur vel dolores fuga, nisi ipsam dolorem assumenda doloremque quas illo! Nulla dolore suscipit deleniti, optio delectus assumenda!
+            </p>
+        </div>
+        <button id="readMoreBtn">Read More</button>
+    </div>
+
+    <script>
+        const readMoreBtn = document.getElementById('readMoreBtn');
+        const fullDetails = document.querySelector('.full-details');
+
+        readMoreBtn.addEventListener('click', function() {
+            if (fullDetails.style.display === 'none' || fullDetails.style.display === '') {
+                fullDetails.style.display = 'block'; 
+                readMoreBtn.textContent = 'Read Less'; 
+            } else {
+                fullDetails.style.display = 'none'; 
+                readMoreBtn.textContent = 'Read More'; 
+            }
+        });
+    </script>
+
+</body>
+</html>
